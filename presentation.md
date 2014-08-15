@@ -50,10 +50,9 @@ _@ungoldman_
     XXX                  XXX         |      |            |               |  Save path to object  |
     XXXXXXXXXXXXXXXXXXXXXXXX         |      +--------+---+               |                       |
      XXX  XXX  XXX  XXX  XX          |               |                   +-----------------------+
-                                     |               | NO                                         
-                                     |               |                               ^            
+                                     |               | NO                            ^             
+                                     |               |                               |            
                                      |               v                               |            
-                                     |                                               |            
                                      |    +----------------------------------+       |            
                                      |    |                                  |       |            
                                      |    |  Does this object contain the    |  YES  |            
