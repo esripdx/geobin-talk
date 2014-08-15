@@ -39,19 +39,44 @@ _@ungoldman_
 
 ---
 
-# Concurrent Data Parsing and Analysis
+# [fit] Parsing the Data
+
+---
+
+     XXX  XXX  XXX  XXX  XX                                              +-----------------------+
+    XXXXXXXXXXXXXXXXXXXXXXXX                +------------+               |                       |
+    XXX                  XXX                |            |     YES       |  Add to foundGeo set  |
+     X   HTTP POST JSON   X ---------+----> |  GeoJSON?  +-------------> |           &           |
+    XXX                  XXX         |      |            |               |  Save path to object  |
+    XXXXXXXXXXXXXXXXXXXXXXXX         |      +--------+---+               |                       |
+     XXX  XXX  XXX  XXX  XX          |               |                   +-----------------------+
+                                     |               | NO                                         
+                                     |               |                               ^            
+                                     |               v                               |            
+                                     |                                               |            
+                                     |    +----------------------------------+       |            
+                                     |    |                                  |       |            
+                                     |    |  Does this object contain the    |  YES  |            
+                                     |    |  information required to create  +-------+            
+                                     |    |  a GeoJSON object?               |                    
+                                     |    |                                  |                    
+                                     |    +-------------------------+--------+                    
+                                     |                              |                             
+                                     |                              |                             
+                                     |                              | NO                          
+                                     |                              |                             
+                                     |                              |                             
+                                     +------------------------------+                             
+                                                                                                  
+                                       Iterate over keys sending                                  
+                                       each value through the                                     
+                                       process                                                    
 
 ---
 
 # [fit] TODO:
 
-Describe our first attempt with channels and how that failed.
-
----
-
-# [fit] TODO:
-
-Describe what we ended up with: a standard mutex lock.
+Describe how we started with channels and ended up with a standard mutex lock.
 
 ---
 

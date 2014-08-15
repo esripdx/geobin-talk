@@ -1,0 +1,37 @@
+ XXX  XXX  XXX  XXX  XX                                                    
+XXXXXXXXXXXXXXXXXXXXXXXX                                                   
+XXX                  XXX                                                   
+ X   HTTP POST JSON   X+----+                                              
+XXX                  XXX    |                                              
+XXXXXXXXXXXXXXXXXXXXXXXX    |                                              
+ XXX  XXX  XXX  XXX  XX     |                                              
+                            v                                              
+                                                  +-----------------------+
+                     +------------+               |                       |
+                     |            |     YES       |  Add to foundGeo set  |
+              +----> |  GeoJSON?  +-------------> |           &           |
+              |      |            |               |  Save path to object  |
+              |      +--------+---+               |                       |
+              |               |                   +-----------------------+
+              |               | NO                                         
+              |               |                               ^            
+              |               v                               |            
+              |                                               |            
+              |    +----------------------------------+       |            
+              |    |                                  |       |            
+              |    |  Does this object contain the    |  YES  |            
+              |    |  information required to create  +-------+            
+              |    |  a GeoJSON object?               |                    
+              |    |                                  |                    
+              |    +-------------------------+--------+                    
+              |                              |                             
+              |                              |                             
+              |                              | NO                          
+              |                              |                             
+              |                              |                             
+              +------------------------------+                             
+                                                                           
+                Iterate over keys sending                                  
+                each value through the                                     
+                process                                                    
+
