@@ -137,7 +137,59 @@ XXXXXXXXXXXXXXXXXXXXXXXX                +------+-----+      |        |          
 
 ---
 
-# Rate limiting middleware
+# Rate Limiting
+
+---
+
+# Rate Limiting
+
+```go
+key := fmt.Sprintf("rate-limit:%s:%d", r.URL.Path, time.Now().Unix())
+
+if keyExistsInRedis(key) && requestCount(key) >= requestsPerSec {
+    http.Error(w, "stahp!", http.StatusServiceUnavailable)
+    return
+}
+
+incrementRequestCount(key)
+
+// serve the request
+```
+
+---
+
+# Basic Middleware
+
+```go
+func myMiddleware(h http.HandlerFunc) http.HandlerFunc {
+    return func(w http.responseWriter, r *http.Request) {
+
+        // do stuff
+
+        h.ServeHTTP(w, r)
+    }
+}
+```
+
+---
+
+# Rate Limit Middleware
+```go
+func myMiddleware(h http.HandlerFunc) http.HandlerFunc {
+    return func(w http.responseWriter, r *http.Request) {
+        key := fmt.Sprintf("rate-limit:%s:%d", r.URL.Path, time.Now().Unix())
+
+        if keyExistsInRedis(key) && requestCount(key) >= requestsPerSec {
+            http.Error(w, "stahp!", http.StatusServiceUnavailable)
+            return
+        }
+
+        incrementRequestCount(key)
+
+        h.ServeHTTP(w, r)
+    }
+}
+```
 
 ---
 
