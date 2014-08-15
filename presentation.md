@@ -61,9 +61,7 @@ _@ungoldman_
                                      |    |                                  |                    
                                      |    +-------------------------+--------+                    
                                      |                              |                             
-                                     |                              |                             
                                      |                              | NO                          
-                                     |                              |                             
                                      |                              |                             
                                      +------------------------------+                             
                                                                                                   
@@ -92,3 +90,28 @@ Describe how we started with channels and ended up with a standard mutex lock.
 ---
 
 # Build/deployment process
+
+---
+
+# Questions?
+
+![](http://img.thesun.co.uk/multimedia/archive/01690/download__7__1690117a.gif)
+
+---
+
+# Thanks!
+
+- Ryan Arana
+_@aranasaurus_
+github.com/aranasaurus
+
+- Josh Yaganeh
+_@hsoj_
+github.com/jyaganeh
+
+- Courtland Fowler
+_@FowlerCourt_
+github.com/courtf
+
+__http://geobin.io/__
+
