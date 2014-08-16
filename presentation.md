@@ -37,9 +37,57 @@ _@ungoldman_
 
 # [fit] Components
 
+- Parsing Data
+- Websockets
+- Rate-limiting Middleware
+- Mocking Redis for tests
+- Build/deployment Process
+
 ---
 
 # [fit] Parsing the Data
+
+---
+
+# GeoJSON
+### Any valid GeoJSON object
+
+```json
+{
+  "type": "Point",
+  "coordinates": [125.6, 10.1]
+}
+```
+
+```json
+{
+  "type": "Polygon",
+  "coordinates": [
+    [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
+    [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
+  ]
+}
+```
+
+---
+
+# Arbitrary JSON
+### Look for an object with geo information in it
+
+```javascript
+{
+  "foo": "bar",
+  "x": -122.6366, // 'long', 'lng', 'longitude'
+  "y": 45.5264,   // 'lat', 'latitude'
+  "radius": 100   // 'accuracy', 'acc', 'distance', 'dist', 'rad'
+}
+
+// or...
+
+{
+  "coords": [-122.6366, 45.5264] // 'coordinates', 'geo', 'loc', 'location'
+}
+```
 
 ---
 
@@ -64,10 +112,10 @@ _@ungoldman_
                                      |                              | NO                          
                                      |                              |                             
                                      +------------------------------+                             
-                                                                                                  
                                        Iterate over keys sending                                  
                                        each value through the                                     
                                        process                                                    
+![original](gophercloud.png)                                                                                                 
 
 ---
 
