@@ -149,7 +149,7 @@ if keyExistsInRedis(key) && requestCount(key) >= requestsPerSec {
 
 incrementRequestCount(key)
 
-// serve the request
+// continue serving request
 ```
 
 ---
@@ -160,7 +160,7 @@ incrementRequestCount(key)
 func myMiddleware(h http.HandlerFunc) http.HandlerFunc {
     return func(w http.responseWriter, r *http.Request) {
 
-        // do stuff
+        // do rate limiting
 
         h.ServeHTTP(w, r)
     }
@@ -171,7 +171,7 @@ func myMiddleware(h http.HandlerFunc) http.HandlerFunc {
 
 # Rate Limit Middleware
 ```go
-func myMiddleware(h http.HandlerFunc) http.HandlerFunc {
+func rateLimit(h http.HandlerFunc) http.HandlerFunc {
     return func(w http.responseWriter, r *http.Request) {
         key := fmt.Sprintf("rate-limit:%s:%d", r.URL.Path, time.Now().Unix())
 
@@ -185,11 +185,16 @@ func myMiddleware(h http.HandlerFunc) http.HandlerFunc {
         h.ServeHTTP(w, r)
     }
 }
+
+r := http.NewServeMux()
+r.HandleFunc("/api/1/foo", rateLimit(fooHandler))
 ```
 
 ---
 
 # Build/deployment process
+
+Cross compile and pitch it over the fence.
 
 ---
 
