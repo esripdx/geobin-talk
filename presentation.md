@@ -91,37 +91,41 @@ _@ungoldman_
 
 ---
 
-     XXX  XXX  XXX  XXX  XX                                              +-----------------------+
-    XXXXXXXXXXXXXXXXXXXXXXXX                +------------+               |                       |
-    XXX                  XXX                |            |     YES       |  Add to foundGeo set  |
-     X   HTTP POST JSON   X ---------+----> |  GeoJSON?  +-------------> |           &           |
-    XXX                  XXX         |      |            |               |  Save path to object  |
-    XXXXXXXXXXXXXXXXXXXXXXXX         |      +--------+---+               |                       |
-     XXX  XXX  XXX  XXX  XX          |               |                   +-----------------------+
-                                     |               | NO                            ^             
-                                     |               |                               |            
-                                     |               v                               |            
-                                     |    +----------------------------------+       |            
-                                     |    |                                  |       |            
-                                     |    |  Does this object contain the    |  YES  |            
-                                     |    |  information required to create  +-------+            
-                                     |    |  a GeoJSON object?               |                    
-                                     |    |                                  |                    
-                                     |    +-------------------------+--------+                    
-                                     |                              |                             
-                                     |                              | NO                          
-                                     |                              |                             
-                                     +------------------------------+                             
-                                       Iterate over keys sending                                  
-                                       each value through the                                     
-                                       process                                                    
-![original](gophercloud.png)                                                                                                 
+```
+ XXX  XXX  XXX  XXX  XX                 +------------+               +-----------------------+
+XXXXXXXXXXXXXXXXXXXXXXXX                |            |     YES       |                       |
+XXX                  XXX                |  Is it     +-------------> |  Add to foundGeo set  |
+ X   HTTP POST JSON   X +-------------> |  GeoJSON?  |               |           &           |
+XXX                  XXX                |            | <----+        |  Save path to object  |
+XXXXXXXXXXXXXXXXXXXXXXXX                +------+-----+      |        |                       |
+ XXX  XXX  XXX  XXX  XX                        |            |        +-----------------------+
+                               +---------------+            |
+                               |       NO                   +------------------------+   ^
+                               v                                                     |   |
+                                                       +-----------------------+     |   |
+                 +--------------------------+          |                       |     |   |
+                 |                          |  +-------+ Save valid values for |     |   |
+                 | Iterate through its keys +--+       | our flagged geo keys  |     |   |
+                 |                          |  |       |                       |     |   |
+                 +-------------+------------+  |       +-----------------------+     |   |
+                               |               |                                     |   |
+                               |               |   +------------------------------+  |   |
+                               v               +---+ Value of key is object/array +--+   |
+                                                   +------------------------------+      |
+             +---------------------------------+                                         |
+             |                                 |                                         |
+             | Did we get at least an x and y? |                                         |
+             |                 |               |                                         |
+             +---------------------------------+                                         |
+                               |                                                         |
+                               +---------------------------------------------------------+
+                                  YES
+```
+![fit original](gophercloud.png)
 
 ---
 
-# [fit] TODO:
-
-Describe how we started with channels and ended up with a standard mutex lock.
+# Channels
 
 ---
 
