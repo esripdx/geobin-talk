@@ -192,7 +192,7 @@ return s
 
 # [fit] trimming down the interface
 ```golang
-// S exposes some methods for interacting with a websocket
+// Socket exposes some methods for interacting with a websocket
 type Socket interface {
     // Submits a payload to the web socket as a text message.
     Write([]byte)
