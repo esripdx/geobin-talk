@@ -135,10 +135,6 @@ XXXXXXXXXXXXXXXXXXXXXXXX                +------+-----+      |        |          
 
 # Rate Limiting
 
----
-
-# Rate Limiting
-
 ```go
 key := fmt.Sprintf("rate-limit:%s:%d", r.URL.Path, time.Now().Unix())
 
