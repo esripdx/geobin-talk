@@ -125,10 +125,6 @@ XXXXXXXXXXXXXXXXXXXXXXXX                +------+-----+      |        |          
 
 ---
 
-# Channels
-
----
-
 # Websockets
 
 ---
@@ -137,7 +133,58 @@ XXXXXXXXXXXXXXXXXXXXXXXX                +------+-----+      |        |          
 
 ---
 
-# Rate limiting middleware
+# Rate Limiting
+
+```go
+key := fmt.Sprintf("rate-limit:%s:%d", r.URL.Path, time.Now().Unix())
+
+if keyExistsInRedis(key) && requestCount(key) > requestsPerSec {
+    http.Error(w, "stahp!", http.StatusServiceUnavailable)
+    return
+}
+
+incrementRequestCount(key)
+
+// continue serving request
+```
+
+---
+
+# Basic Middleware
+
+```go
+func myMiddleware(h http.HandlerFunc) http.HandlerFunc {
+    return func(w http.responseWriter, r *http.Request) {
+
+        // do rate limiting
+
+        h.ServeHTTP(w, r)
+    }
+}
+```
+
+---
+
+# Rate Limit Middleware
+```go
+func rateLimit(h http.HandlerFunc) http.HandlerFunc {
+    return func(w http.responseWriter, r *http.Request) {
+        key := fmt.Sprintf("rate-limit:%s:%d", r.URL.Path, time.Now().Unix())
+
+        if keyExistsInRedis(key) && requestCount(key) > requestsPerSec {
+            http.Error(w, "stahp!", http.StatusServiceUnavailable)
+            return
+        }
+
+        incrementRequestCount(key)
+
+        h.ServeHTTP(w, r)
+    }
+}
+
+r := http.NewServeMux()
+r.HandleFunc("/api/1/foo", rateLimit(fooHandler))
+```
 
 ---
 
