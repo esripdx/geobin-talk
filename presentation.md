@@ -4,7 +4,7 @@
 <br />
 <br />
 <br />
-__http://github.com/aranasaurus/geobin-talk/__
+__http://github.com/esripdx/geobin-talk/__
 
 ![original](geobin.io.png)
 
@@ -371,5 +371,5 @@ _@hsoj_ | github.com/jyaganeh
 _@FowlerCourt_ | github.com/courtf
 
 __http://geobin.io/__
-__http://github.com/aranasaurus/geobin-talk/__
+__http://github.com/esripdx/geobin-talk/__
 
