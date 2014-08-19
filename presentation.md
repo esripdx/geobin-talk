@@ -1,4 +1,13 @@
+
 # [fit] geobin.io
+## [fit] Overview and Lessons Learned
+<br />
+<br />
+<br />
+__http://github.com/aranasaurus/geobin-talk/__
+
+![original](geobin.io.png)
+
 ---
 
 # Esri Portland R&D Center
@@ -11,13 +20,15 @@ _@hsoj_
 __Ryan Arana__
 _@aranasaurus_
 
-__Nate Goldman__
+<br />
+
+__Nate Goldman__ - UI/UX + general javascript wizardry
 _@ungoldman_
 
 ---
 
-# [fit] It's like RequestBin
-# [fit] + Geo
+# [fit] It's like RequestBin...
+# [fit] with a map
 
 ---
 
@@ -36,17 +47,17 @@ _@ungoldman_
 
 # [fit] Demo!
 
-### Geotrigger Editor __>__ Faker __>__ Geobin
+### [fit] Geotrigger Editor __>__ Faker __>__ Geobin
 
 ---
 
 # [fit] Components
 
-- Parsing Data
+- Parsing the Data
 - Websockets
 - Mocking Redis for tests
 - Rate-limiting Middleware
-- Build/deployment Process
+- Deployment Process
 
 ---
 
@@ -124,8 +135,8 @@ XXXXXXXXXXXXXXXXXXXXXXXX                +------+-----+      |        |          
              |                                 |                                         |
              +---------------------------------+                                         |
                                |                                                         |
+                               |   YES                                                   |
                                +---------------------------------------------------------+
-                                  YES
 ```
 ![fit original](gophercloud.png)
 
@@ -232,11 +243,11 @@ defer func() {
 
 ---
 
-# [fit] redis mocking
+## Redis Mocking
 
-* Recall Francesc's best practices!
+- Recall Francesc's [best practices](http://talks.golang.org/2013/bestpractices.slide#24)!
 
-[12 Go best practices](http://talks.golang.org/2013/bestpractices.slide#24)
+![inline original](francesc.png)
 
 ---
 
@@ -338,7 +349,7 @@ r.HandleFunc("/api/1/foo", rateLimit(fooHandler))
 
 ---
 
-# Build/deployment process
+# [fit] Deployment Process
 
 ---
 
@@ -351,16 +362,14 @@ r.HandleFunc("/api/1/foo", rateLimit(fooHandler))
 # Thanks!
 
 - Ryan Arana
-_@aranasaurus_
-github.com/aranasaurus
+_@aranasaurus_ | github.com/aranasaurus
 
 - Josh Yaganeh
-_@hsoj_
-github.com/jyaganeh
+_@hsoj_ | github.com/jyaganeh
 
 - Courtland Fowler
-_@FowlerCourt_
-github.com/courtf
+_@FowlerCourt_ | github.com/courtf
 
 __http://geobin.io/__
+__http://github.com/aranasaurus/geobin-talk/__
 
