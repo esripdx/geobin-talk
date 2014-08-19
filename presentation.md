@@ -154,11 +154,132 @@ XXXXXXXXXXXXXXXXXXXXXXXX                +------+-----+      |        |          
 
 ---
 
-# Websockets
+# Websockets (yay!)
+[github.com/gorilla/websocket](http://www.gorillatoolkit.org/pkg/websocket)
 
 ---
 
-# Redis mocking
+# [fit] socket struct
+```golang
+s := &s{
+    name:      name,
+    ws:        ws,
+    send:      make(chan []byte, 256),
+    shutdown:  make(chan bool),
+    closed:    false,
+    closeLock: &sync.Mutex{},
+    onRead:    or,
+    onClose:   oc,
+}
+
+go s.writePump()
+go s.readPump()
+return s
+```
+
+---
+
+# [fit] trimming down the interface
+```golang
+// S exposes some methods for interacting with a websocket
+type Socket interface {
+    // Submits a payload to the web socket as a text message.
+    Write([]byte)
+    // return the provided name
+    GetName() string
+    // Close the socket.
+    Close()
+}
+```
+
+---
+
+# [fit] keeping track of sockets
+```golang
+type SocketMap interface {
+    Add(binName, socketUUID string, s Socket)
+    Get(binName, socketUUID string) (Socket, bool)
+    Delete(binName, socketUUID string) error
+    Send(binName string, payload []byte) error
+}
+```
+
+---
+
+# [fit] concurrency with redis!
+```golang
+// redis client
+client := redis.NewTCPClient(&redis.Options{
+    Addr:     conf.RedisHost,
+    Password: conf.RedisPass,
+    DB:       conf.RedisDB,
+})
+
+// redis pubsub connection
+ps := client.PubSub()
+
+// prepare a socketmap
+sm := NewSocketMap(ps)
+
+// loop for receiving messages from Redis pubsub, and forwarding them on to relevant ws connection
+go redisPump(ps, sm)
+
+defer func() {
+    ps.Close()
+    client.Close()
+}()
+```
+
+---
+
+# [fit] redis mocking
+
+* Recall Francesc's best practices!
+
+[12 Go best practices](http://talks.golang.org/2013/bestpractices.slide#24)
+
+---
+
+# [fit] interfaces making testing easier!
+```golang
+// mock our use of redis pubsub for modularity/testing purposes
+type PubSubber interface {
+    Subscribe(channels ...string) error
+    Unsubscribe(channels ...string) error
+}
+
+// mock our use of redis client for modularity/testing purposes
+type RedisClient interface {
+    ZAdd(key string, members ...redis.Z) (int64, error)
+    ZCount(key, min, max string) (int64, error)
+    Expire(key string, dur time.Duration) (bool, error)
+    Publish(channel, message string) (int64, error)
+    ZRevRange(key, start, stop string) ([]string, error)
+    Exists(key string) (bool, error)
+    Get(key string) (string, error)
+    Incr(key string) (int64, error)
+}
+```
+
+---
+
+# [fit] tests without dependencies
+```golang
+type MockRedis struct {
+    sync.Mutex
+    bins  map[string][]string
+    incrs map[string]string
+}
+
+type MockPubSub struct{}
+
+func NewMockRedis() *MockRedis {
+    return &MockRedis{
+        bins:  make(map[string][]string),
+        incrs: make(map[string]string),
+    }
+}
+```
 
 ---
 
