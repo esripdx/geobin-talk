@@ -27,6 +27,11 @@ _@ungoldman_
 
 # [fit] Why did we make it?
 
+- "RequestBin is cool, but..."
+- Debugging/Visualizing the Geotrigger Service as we built other tools around it
+
+![inline autoplay loop](http://media.esri.com/arcstream/2014/02/3112-ersi-geotrigger-service_960.mp4)
+
 ---
 
 # [fit] Demo!
@@ -49,30 +54,31 @@ _@ungoldman_
 
 ---
 
-# GeoJSON
-### Any valid GeoJSON object
+HTTP POST:
 
 ```json
-{
-  "type": "Point",
-  "coordinates": [125.6, 10.1]
-}
-```
-
-```json
-{
-  "type": "Polygon",
-  "coordinates": [
-    [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
-    [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
-  ]
-}
+[{
+    "title": "I've got geojson",
+    "data": { "message": "Standards rule!" },
+    "geo": {
+        "type": "Point",
+        "coordinates": [-122.6763, 45.5218]
+    }
+}, {
+    "title": "I've got my own geo data schema",
+    "data": { "message": "ohai!" },
+    "geo": { 
+        "lat": 45.5218,
+        "lng": -122.6763,
+        "rad": 100
+    }
+}]
 ```
 
 ---
 
 # Arbitrary JSON
-### Look for an object with geo information in it
+### How we determine if an object has Geo Information in it
 
 ```javascript
 {
@@ -85,7 +91,7 @@ _@ungoldman_
 // or...
 
 {
-  "coords": [-122.6366, 45.5264] // 'coordinates', 'geo', 'loc', 'location'
+  "geo": [-122.6366, 45.5264] // 'coord[s]', 'coordinate[s]', 'loc', 'location'
 }
 ```
 
@@ -115,7 +121,7 @@ XXXXXXXXXXXXXXXXXXXXXXXX                +------+-----+      |        |          
              +---------------------------------+                                         |
              |                                 |                                         |
              | Did we get at least an x and y? |                                         |
-             |                 |               |                                         |
+             |                                 |                                         |
              +---------------------------------+                                         |
                                |                                                         |
                                +---------------------------------------------------------+
@@ -126,6 +132,25 @@ XXXXXXXXXXXXXXXXXXXXXXXX                +------+-----+      |        |          
 ---
 
 # Channels
+
+- WaitGroup and channel per request
+- Fire up a goroutine that just waits for geo data to come in from the channel and adds it to an in-memory slice when it comes in.
+- Parse method fires up a goroutine each time it's called and calls itself recursively to find any geo data in the object, sending it through the channel when it does.
+
+---
+
+# What was wrong with that?
+
+- Race conditions!
+- Goroutines sticking around forever because of unclosed channels.
+
+---
+
+# Mutex
+
+- Each request calls Parse and then waits on the WaitGroup
+- Parse method adds 1 to the WaitGroup then fires up a goroutine and parses the object it was given, recursively calling itself until it gets to all of the leaf nodes.
+- This time, when it finds a geo object it calls a method which locks the mutex, appends to the found geo slice, unlocks and moves on.
 
 ---
 
