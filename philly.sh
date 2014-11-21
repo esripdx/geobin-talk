@@ -1,5 +1,5 @@
 # Arch Street Meeting House
-curl -X POST -H "Content-Type: application/json" -d '{ "y": 39.9523017, "y": -75.1462273 }' geobin.io/$BINID
+curl -X POST -H "Content-Type: application/json" -d '{ "y": 39.9523017, "x": -75.1462273 }' geobin.io/$BINID
 
 # Ladder 15 
 curl -X POST -H "Content-Type: application/json" -d '{ "y": 39.9502599, "x": -75.1669521}' geobin.io/$BINID

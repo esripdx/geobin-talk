@@ -46,27 +46,6 @@ __Nate Goldman, @ungoldman__
 
 ---
 
-# [fit] Arbitrary JSON
-
-## [fit] How we determine if an object has Geo Information in it
-
-```javascript
-{
-  "foo": "bar",
-  "x": -122.6366, // 'long', 'lng', 'longitude'
-  "y": 45.5264,   // 'lat', 'latitude'
-  "radius": 100   // 'accuracy', 'acc', 'distance', 'dist', 'rad'
-}
-
-// or...
-
-{
-  "geo": [-122.6366, 45.5264] // 'coord[s]', 'coordinate[s]', 'loc', 'location'
-}
-```
-
----
-
 # [fit] Why did we make it?
 
 ---
@@ -81,13 +60,15 @@ __Nate Goldman, @ungoldman__
 
 ![original](move-slow-and-make-things.png)
 
-# [fit] Thanks!
+*Thanks!*
+[geobin.io](http://geobin.io) 
+<br />
+*Ryan Arana*
+[@aranasaurus](http://twitter.com/aranasaurus)
+[rarana@esri.com](mailto:rarana@esri.com)
 
-   [http://geobin.io](http://geobin.io)
-   [http://github.com/esripdx/geobin.io](http://github.com/esripdx/geobin.io)
+*Josh Yaganeh*
+[@hsoj](http://twitter.com/hsoj)
+[jyaganeh@esri.com](mailto:jyaganeh@esri.com)
 
-# [fit] Ryan Arana
-
-   [@aranasaurus](http://twitter.com/aranasaurus)
-   [rarana@esri.com](mailto:rarana@esri.com)
 

@@ -1,10 +1,4 @@
-curl -X POST \
--H "Content-Type: application/json" \
--d '{"lat":38.894779,"lng":-77.002461,"rad":100}' geobin.io/FFn7nerBFq
-
-===
-
-{
+curl -X POST -H "Content-Type: application/json" -d '{
     "type": "Feature",
     "properties": {},
     "geometry": {
@@ -82,10 +76,10 @@ curl -X POST \
         ]
     ]
     }
-}
+}' geobin.io/$BINID
 
 
-{
+curl -X POST -H "Content-Type: application/json" -d '{
     "type": "Feature",
     "properties": {},
     "geometry": {
@@ -131,16 +125,17 @@ curl -X POST \
         ]
     ]
     }
-}
+}' geobin.io/$BINID
 
-{
+curl -X POST -H "Content-Type: application/json" -d '{
     "x": -77.03525573015212,
     "y": 38.88947122889294
-}
+}' geobin.io/$BINID
 
-{
+curl -X POST -H "Content-Type: application/json" -d '{
     "x": -77.00905323028564,
     "y": 38.88981361419182,
     "radius": 100
-}
+}' geobin.io/$BINID
+
 
